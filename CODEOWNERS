@@ -1,0 +1,16 @@
+# @dairyj0925 is the code owner for
+# document_classification and should review any PRs
+* @dairyj0925
+
+configs/                        @dairyj0925
+datasets/                       @dairyj0925
+ml/  @dairyj0925
+.dockerignore                   @dairyj0925
+.gitignore                      @dairyj0925
+CODE_OF_CONDUCT.md              @dairyj0925
+CODEOWNERS                      @dairyj0925
+Dockerfile                      @dairyj0925
+LICENSE                         @dairyj0925
+README.md                       @dairyj0925
+requirements.txt                @dairyj0925
+setup.py                        @dairyj0925
