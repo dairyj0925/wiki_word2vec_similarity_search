@@ -63,7 +63,7 @@ class ConcreteWIKI(AbstractDatasets):
         self.data_path = '../datasets/'
         self.zhwiki_bz2 = 'zhwiki-latest-pages-articles.xml.bz2'
         self.zhwiki_raw = 'zhwiki_raw.txt'
-        self.zhwiki_raw_t2s = 'zhwiki_raw_t2s.txt'
+        self.zhwiki_raw_t2s = 'zhwiki_t2s.txt'
         self.zhwiki_seg_t2s = 'zhwiki_seg.txt'
         self.embedded_model_t2s = 'checkpoint/w2v/zhwiki_embedding_t2s.model'
         self.embedded_vector_t2s = 'checkpoint/w2v/vector_t2s'
@@ -97,10 +97,33 @@ class ConcreteWIKI(AbstractDatasets):
         self.logger.info('Finished Saved ' + str(i) + ' articles')
 
     def zhwiki_segment(self, remove_alpha=True):
-
+        def is_alpha(tok):
+            try:
+                return tok.encode('ascii').isalpha()
+            except UnicodeEncodeError:
+                return False
+        import jieba
+        import codecs
         output = open(os.path.join(self.curpath , self.data_path, self.zhwiki_seg_t2s), 'w', encoding='utf-8')
         self.logger.info('start ...zhwiki_segment')
-        pass
+        i = 0
+        with codecs.open(os.path.join(self.curpath ,self.data_path, self.zhwiki_raw_t2s), 'r', encoding='utf-8') as raw_input:
+            for line in raw_input:
+                line = line.strip()
+                i += 1
+                print('line ' + str(i))
+                text = line.split()
+                if True:
+                    text = [w for w in text if not is_alpha(w)]
+                word_cut_seed = [jieba.cut(t) for t in text]
+                tmp = ''
+                for sent in word_cut_seed:
+                    for tok in sent:
+                        tmp += tok + ' '
+                tmp = tmp.strip()
+                if tmp:
+                    output.write(tmp + '\n')
+            output.close()
 
 
 def main():
