@@ -61,18 +61,19 @@ class ConcreteWIKI(AbstractDatasets):
     def __init__(self):
         self.curpath =  os.path.dirname(os.path.realpath(__file__))
         self.data_path = '../datasets/'
+        self.ml_path = './checkpoint'
         self.zhwiki_bz2 = 'zhwiki-latest-pages-articles.xml.bz2'
         self.zhwiki_raw = 'zhwiki_raw.txt'
         self.zhwiki_raw_t2s = 'zhwiki_t2s.txt'
         self.zhwiki_seg_t2s = 'zhwiki_seg.txt'
-        self.embedded_model_t2s = 'checkpoint/w2v/zhwiki_embedding_t2s.model'
-        self.embedded_vector_t2s = 'checkpoint/w2v/vector_t2s'
+        self.embedded_model_t2s = 'w2v/zhwiki_embedding_t2s.model'
+        self.embedded_vector_t2s = 'w2v/vector_t2s'
 
         program = os.path.basename(sys.argv[0])
-        self.logger = logging.getLogger(program)
-        logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s')
+        self.logger = logging.getLogger(__class__.__name__)
+        logging.basicConfig(format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
         logging.root.setLevel(level=logging.INFO)
-        self.logger.info("running %s" % ' '.join(sys.argv))
+        self.logger.info("running {}".format(__class__.__name__))
 
     def dataprocess(self):
         inp, outp = sys.argv[1:3]
